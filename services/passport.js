@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 //model class
 const User = mongoose.model('users');
 passport.serializeUser((user, done) => {
-    done(null,user.id); //this id belongs to id in collection(db)
+    done(null, user.id); //this id belongs to id in collection(db)
 });
 passport.deserializeUser((id, done) => {
     User.findById(id).then(user => {
@@ -16,8 +16,7 @@ passport.deserializeUser((id, done) => {
 passport.use(new GoogleStrategy({
     clientID: keys.googleClientID,
     clientSecret: keys.googleClientSecret,
-    callbackURL: '/auth/google/callback',
-    proxy: true
+    callbackURL: '/auth/google/callback'
 },
     (accessToken, refreshToken, profile, done) => {
         User.findOne({ googleId: profile.id }).then(existingUser => {
